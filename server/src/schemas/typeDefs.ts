@@ -18,9 +18,22 @@ const typeDefs = `
         available: Boolean
     }
 
+    type RawgGame {
+        publisher: String
+        released: String
+        description: String
+        image: String
+        title: String
+    }
+
     type RentalGame {
         _id: Game
         returnDate: String
+    }
+    
+    type RawgResults {
+        slug: String
+        name: String
     }
 
     type Auth {
@@ -32,6 +45,8 @@ const typeDefs = `
         me: User
         gameSwapLibrary: [Game]
         searchBar(title: String!): [Game]
+        gamesByName(title: String!): [RawgResults]
+        gameInfoSlug(rawgSlug: String!): RawgGame
     }
 
     type Mutation {
