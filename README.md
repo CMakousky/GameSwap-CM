@@ -84,7 +84,7 @@ GameSwap is a web-based software application that allows users to borrow video g
 This project is licensed under the MIT License.
 
 ## Deployed Web Application   
-https://gameswap.onrender.com/
+https://gameswap-cm.onrender.com
 
 ![GameSwap](./client/images/screenshot1.png)<br><br>
 ![GameSwap](./client/images/screenshot2.png) <br><br>
