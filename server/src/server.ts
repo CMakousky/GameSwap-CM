@@ -10,7 +10,7 @@ import { typeDefs, resolvers } from './schemas/index.js';
 import { authenticateToken } from './services/auth.js';
 
 // import to use the RAWG.io API
-import router from './routes/index.js';
+// import router from './routes/index.js';
 
 const server = new ApolloServer({
   typeDefs,
@@ -33,7 +33,7 @@ const startApolloServer = async () => {
   app.use('/graphql', expressMiddleware(server as any, { context: authenticateToken as any }));
 
   // RAWG.io API routes
-  app.use(router);
+  // app.use(router);
 
   // if we're in production, serve client/dist as static assets
   // if (process.env.NODE_ENV === 'production') {

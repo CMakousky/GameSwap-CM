@@ -22,7 +22,6 @@ const dataCleaner = async (data: any): Promise<SearchResults[]> => {
       return { slug: result.slug, name: result.name }
     }
   );
-
   if (data.next) {
     let nextPage = data.next;
     // Grab results from the first 10 pages of the search results.
@@ -40,7 +39,6 @@ const dataCleaner = async (data: any): Promise<SearchResults[]> => {
       nextPage = data1.next;
     };
   };
-
   return cleanData;
 };
 
