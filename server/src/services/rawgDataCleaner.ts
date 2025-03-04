@@ -18,24 +18,24 @@ interface RawgSearchResults {
 const dataCleaner = async (data: any): Promise<RawgSearchResults[]> => {
     let cleanData: RawgSearchResults[] = data.results.map(
         (result: any) => {
-        return { slug: result.slug, name: result.name }
+            return { slug: result.slug, name: result.name }
         }
     );
     if (data.next) {
         let nextPage = data.next;
         // Grab results from the first 10 pages of the search results.
         for (let page = 0; page < 10; page++) {
-        let response1 = await fetch(nextPage);
-        let data1 = await response1.json();
-        let cleanData1: RawgSearchResults[] = data1.results.map(
-            (result: any) => {
-            return { slug: result.slug, name: result.name }
-            }
-        );
-        cleanData = cleanData.concat(cleanData1);
-        // Break out of the loop if there is no next page.
-        if (!data1.next) {break};
-        nextPage = data1.next;
+            let response1 = await fetch(nextPage);
+            let data1 = await response1.json();
+            let cleanData1: RawgSearchResults[] = data1.results.map(
+                (result: any) => {
+                    return { slug: result.slug, name: result.name }
+                }
+            );
+            cleanData = cleanData.concat(cleanData1);
+            // Break out of the loop if there is no next page.
+            if (!data1.next) {break};
+            nextPage = data1.next;
         };
     };
     return cleanData;
