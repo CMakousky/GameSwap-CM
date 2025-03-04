@@ -45,8 +45,6 @@ const typeDefs = `
         me: User
         gameSwapLibrary: [Game]
         searchBar(title: String!): [Game]
-        gamesByName(title: String!): [RawgResults]
-        gameInfoSlug(rawgSlug: String!): RawgGame
     }
 
     type Mutation {
@@ -54,6 +52,8 @@ const typeDefs = `
         addUser(username: String!, email: String!, password: String!): Auth
         saveGame(_id: ID!): [RentalGame]
         removeGame(_id: ID!): [RentalGame]
+        rawgGamesByName(title: String!): [RawgResults]
+        rawgGameInfoSlug(rawgSlug: String!): RawgGame
     }
 `;
 

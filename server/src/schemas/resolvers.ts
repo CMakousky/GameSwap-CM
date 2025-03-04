@@ -51,58 +51,6 @@ const resolvers = {
       return LibraryGame.find(
         { title: { $regex: `${title}`, $options: 'i' } }
       );
-    },
-    // Search for game information from RAWG by name or game_id number
-    gamesByName: async (_parent:any, { title }: SearchBarArgs): Promise<RawgSearchResults[] | null> => {
-      try {
-        const cleanName: string = encodeURIComponent(title);
-        console.log(`https://api.rawg.io/api/games?search=${cleanName}&search_exact=true&key=${process.env.RAWG_API_KEY}`);
-        const response = await fetch(`https://api.rawg.io/api/games?search=${cleanName}&search_exact=true&key=${process.env.RAWG_API_KEY}`);
-    
-        // console.log('Response:', response);
-        const data = await response.json();
-    
-        if (!response.ok) {
-          throw new Error('invalid API response, check the network tab');
-        };
-    
-        const cleanData = await dataCleaner(data);
-    
-        console.log(cleanData);
-    
-        await writeSearchHistory(cleanData);
-    
-        return(cleanData);
-      } catch (err) {
-        console.log('an error occurred', err);
-        return null
-      }
-    },
-    // Get game info from RAWG based on game slug
-    gameInfoSlug: async (_parent:any, { rawgSlug }: RawgSlug): Promise<GameSwapType | null> => {
-      try {
-        console.log(`https://api.rawg.io/api/games/${rawgSlug}?key=${process.env.RAWG_API_KEY}`);
-        const response = await fetch(`https://api.rawg.io/api/games/${rawgSlug}?key=${process.env.RAWG_API_KEY}`);
-    
-        // console.log('Response:', response);
-        const data = await response.json();
-    
-        if (!response.ok) {
-          throw new Error('invalid API response, check the network tab');
-        };
-    
-        const cleanData: GameSwapType = slugDataCleaner(data);
-    
-        console.log(cleanData);
-    
-        // Update the gameSwapLibrary.json file with the new data.
-        // await seedUpdateService.addSearchResults(cleanData.title, cleanData.publisher, cleanData.released, cleanData.description, cleanData.image);
-    
-        return(cleanData);
-      } catch (err) {
-        console.log('an error occurred', err);
-        return null
-      }
     }
   },
   Mutation: {
@@ -180,7 +128,59 @@ const resolvers = {
       };
       throw new AuthenticationError('Cannot find context.');
     },
-  },
+    // Search for game information from RAWG by name or game_id number
+    rawgGamesByName: async (_parent:any, { title }: SearchBarArgs): Promise<RawgSearchResults[] | null> => {
+      try {
+        const cleanName: string = encodeURIComponent(title);
+        console.log(`https://api.rawg.io/api/games?search=${cleanName}&search_exact=true&key=${process.env.RAWG_API_KEY}`);
+        const response = await fetch(`https://api.rawg.io/api/games?search=${cleanName}&search_exact=true&key=${process.env.RAWG_API_KEY}`);
+    
+        // console.log('Response:', response);
+        const data = await response.json();
+    
+        if (!response.ok) {
+          throw new Error('invalid API response, check the network tab');
+        };
+    
+        const cleanData = await dataCleaner(data);
+    
+        console.log(cleanData);
+    
+        await writeSearchHistory(cleanData);
+    
+        return(cleanData);
+      } catch (err) {
+        console.log('an error occurred', err);
+        return null
+      }
+    },
+    // Get game info from RAWG based on game slug
+    rawgGameInfoSlug: async (_parent:any, { rawgSlug }: RawgSlug): Promise<GameSwapType | null> => {
+      try {
+        console.log(`https://api.rawg.io/api/games/${rawgSlug}?key=${process.env.RAWG_API_KEY}`);
+        const response = await fetch(`https://api.rawg.io/api/games/${rawgSlug}?key=${process.env.RAWG_API_KEY}`);
+    
+        // console.log('Response:', response);
+        const data = await response.json();
+    
+        if (!response.ok) {
+          throw new Error('invalid API response, check the network tab');
+        };
+    
+        const cleanData: GameSwapType = slugDataCleaner(data);
+    
+        console.log(cleanData);
+    
+        // Update the gameSwapLibrary.json file with the new data.
+        // await seedUpdateService.addSearchResults(cleanData.title, cleanData.publisher, cleanData.released, cleanData.description, cleanData.image);
+    
+        return(cleanData);
+      } catch (err) {
+        console.log('an error occurred', err);
+        return null
+      }
+    }
+  }
 };
 
 export default resolvers;
