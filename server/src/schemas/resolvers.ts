@@ -128,7 +128,7 @@ const resolvers = {
       };
       throw new AuthenticationError('Cannot find context.');
     },
-    // Search for game information from RAWG by name or game_id number
+    // Search for game information from RAWG by name or game_id number. Write the results of the query to 'searchHistory.json'.
     rawgGamesByName: async (_parent:any, { title }: SearchBarArgs): Promise<RawgSearchResults[] | null> => {
       try {
         const cleanName: string = encodeURIComponent(title);
@@ -154,7 +154,7 @@ const resolvers = {
         return null
       }
     },
-    // Get game info from RAWG based on game slug
+    // Get game info from RAWG based on game slug. Optionally update the 'gameSwapLibrary.json' file with the new data.
     rawgGameInfoSlug: async (_parent:any, { rawgSlug }: RawgSlug): Promise<GameSwapType | null> => {
       try {
         console.log(`https://api.rawg.io/api/games/${rawgSlug}?key=${process.env.RAWG_API_KEY}`);
