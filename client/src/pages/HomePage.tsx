@@ -16,6 +16,7 @@ import type { Game } from '../models/Game';
 import { GAME_SWAP_LIBRARY, SEARCH_BAR } from '../utils/queries';
 import { SAVE_GAME } from '../utils/mutations';
 import { useMutation, useQuery } from '@apollo/client';
+import { plainText } from '../utils/textFilter';
 
 const SearchLibrary = () => {
   // Query to retrieve saved user data
@@ -37,7 +38,21 @@ const SearchLibrary = () => {
   const [recordedGameIds, setRecordedGameIds] = useState(getSavedGameIds());
 
   // useState to determine if the game description should display
-  const [displayDescription, setDisplayDescription] = useState<string>(); 
+  const [displayDescription, setDisplayDescription] = useState<string>();
+
+  // Function to strip HTML elements out of game descriptions
+  const queryResponseFilter = (queryResponse: Game[]): Game[] => {
+    const filteredResponse: Game[] = queryResponse.map((game: Game) => ({
+      _id: game._id,
+      publisher: game.publisher,
+      title: game.title,
+      released: game.released,
+      description: plainText(game.description),
+      image: game.image || '',
+      available: game.available
+    }))
+    return filteredResponse;
+  };
 
   // set up useEffect hook to save `recordedGameIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -45,9 +60,11 @@ const SearchLibrary = () => {
     const getEntireLibraryData = async () => {
       try {
         await entireLibrary.data;
+
+        const gameSwapLibraryData = queryResponseFilter(entireLibrary.data.gameSwapLibrary);
     
         if (!entireLibrary.loading && !searchedGames.length) {
-          setSearchedGames(entireLibrary.data.gameSwapLibrary);
+          setSearchedGames(gameSwapLibraryData);
         };
 
       } catch (err) {
@@ -68,7 +85,7 @@ const SearchLibrary = () => {
 
     // Return the entire library on an empty search
     if (!searchInput) {
-      setSearchedGames(entireLibrary.data.gameSwapLibrary);
+      setSearchedGames(queryResponseFilter(entireLibrary.data.gameSwapLibrary));
       return false;
     }
 
@@ -83,15 +100,7 @@ const SearchLibrary = () => {
 
       // console.log(items);
 
-      const gameData = items.map((game: Game) => ({
-        _id: game._id,
-        publisher: game.publisher,
-        title: game.title,
-        released: game.released,
-        description: game.description,
-        image: game.image || '',
-        available: game.available
-      }));
+      const gameData = queryResponseFilter(items);
 
       setSearchedGames(gameData);
       setSearchInput('');

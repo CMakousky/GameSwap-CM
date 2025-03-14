@@ -8,6 +8,7 @@ import type { User } from '../models/User';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
 import { REMOVE_GAME } from '../utils/mutations';
+import { plainText } from '../utils/textFilter';
 
 const SavedGames = () => {
   const [userData, setUserData] = useState<User>({
@@ -133,7 +134,7 @@ const SavedGames = () => {
                       <p className='small'>Publisher: {game._id.publisher}</p>
                       <p> <b>Due Date:</b> {game.returnDate} </p>
                     </span>
-                    {displayDescription === game._id.title? <Card.Text>{game._id.description}</Card.Text> : <></>}
+                    {displayDescription === game._id.title? <Card.Text>{plainText(game._id.description)}</Card.Text> : <></>}
                     <span className='control-buttons'>
                       <Button 
                         onClick={() => {
