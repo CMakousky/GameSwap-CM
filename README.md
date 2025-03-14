@@ -38,7 +38,7 @@ GameSwap is a web-based software application that allows users to borrow video g
     npm run install
     ```
 
-3. Create a `.env` file in the [server](http://_vscodecontentref_/0) directory and add your MongoDB URI and JWT secret key:
+3. Create a `.env` file in the server directory and add your MongoDB URI and JWT secret key:
     ```env
     MONGODB_URI='your-mongodb-uri'
     JWT_SECRET_KEY='your-secret-key'
