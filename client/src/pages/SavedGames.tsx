@@ -19,9 +19,7 @@ const SavedGames = () => {
   });
 
   // Query to retrieve saved user data
-  const { loading, data, error } = useQuery(GET_ME);
-
-  const userProfileData = data;
+  const { loading, data, error, refetch } = useQuery(GET_ME);
   
   // Mutation to delete a game from the user's favorites
   const [removeGame] = useMutation(REMOVE_GAME);
@@ -38,7 +36,7 @@ const SavedGames = () => {
           return false;
         }
 
-        await userProfileData.me;
+        await refetch();
 
         if (error) {
           throw new Error('something went wrong!');
@@ -47,15 +45,15 @@ const SavedGames = () => {
         // if (loading) {
         //   console.log("Loading:", loading);
         // } else {
-        //   console.log("getUserData:", userProfileData);
+        //   console.log("me:", userProfileData);
         // };
         
         if (!loading) {
           const user: User = {
-            username: userProfileData.me.username,
-            email: userProfileData.me.email,
+            username: data.me.username,
+            email: data.me.email,
             password: '',
-            savedGames: userProfileData.me.savedGames,
+            savedGames: data.me.savedGames,
           };
           setUserData(user);
         };
@@ -76,10 +74,20 @@ const SavedGames = () => {
 
     try {
       // Execute the removeGame mutation with input variables of _id
-      await removeGame({ variables: { _id } });
+      const updatedSavedGames = await removeGame({ variables: { _id } });
 
-      if (error) {
+      if (updatedSavedGames.errors) {
         throw new Error('something went wrong!');
+      };
+
+      if (!loading) {
+        const user: User = {
+          username: userData.username,
+          email: userData.email,
+          password: '',
+          savedGames: updatedSavedGames.data.removeGame,
+        };
+        setUserData(user);
       };
 
       // upon success, remove game's id from localStorage
