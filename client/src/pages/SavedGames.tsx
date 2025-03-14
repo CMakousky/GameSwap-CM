@@ -29,7 +29,7 @@ const SavedGames = () => {
   const [removeGame] = useMutation(REMOVE_GAME);
 
   // useState to determine if the game description should display
-  const [displayDescription, setDisplayDescription] = useState<string>(); 
+  const [displayDescription, setDisplayDescription] = useState<string>(''); 
 
   useEffect(() => {
     const getUserData = async () => {
