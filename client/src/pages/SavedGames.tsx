@@ -93,7 +93,7 @@ const SavedGames = () => {
 
   // if data isn't here yet, say so
   if (loading) {
-    return <h2>LOADING...</h2>;
+    return <h2 className="text-light bg-dark p-5 bgcolor orbitron">LOADING...</h2>;
   }
 
   return (

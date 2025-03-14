@@ -119,6 +119,13 @@ const SearchLibrary = () => {
     }
   };
 
+  // if data isn't here yet, say so
+  if (entireLibrary.loading) {
+    return (
+      <h2 className="text-light bg-dark p-5 bgcolor orbitron">LOADING...</h2>
+    );
+  };
+
   return (
     <>
       <div className="text-light bg-dark p-5 bgcolor">
