@@ -83,7 +83,7 @@ const SearchLibrary = () => {
       const searchBarResults: Game[] = await response.searchBar;
 
       setSearchedGames(searchBarResults);
-      setSearchInput('');
+      // setSearchInput('');
     } catch (err) {
       console.error(err);
     }
@@ -151,7 +151,7 @@ const SearchLibrary = () => {
         <h2 className='pt-5 text-light orbitron'>
           {searchedGames.length
             ? `Viewing ${searchedGames.length} results:`
-            : 'Search for a game to begin'}
+            : `No matches found for ${searchInput}.`}
         </h2>
         <Row>
           {searchedGames.map((game) => {
