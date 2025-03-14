@@ -80,15 +80,15 @@ const SavedGames = () => {
         throw new Error('something went wrong!');
       };
 
-      if (!loading) {
-        const user: User = {
-          username: userData.username,
-          email: userData.email,
-          password: '',
-          savedGames: updatedSavedGames.data.removeGame,
-        };
-        setUserData(user);
+      // Update the userData with the new savedGames array
+      const user: User = {
+        username: userData.username,
+        email: userData.email,
+        password: '',
+        savedGames: updatedSavedGames.data.removeGame,
       };
+      
+      setUserData(user);
 
       // upon success, remove game's id from localStorage
       removeGameId(title);
