@@ -22,10 +22,10 @@ const SearchLibrary = () => {
   // Query to retrieve saved user data
   const entireLibrary = useQuery(GAME_SWAP_LIBRARY);
 
-  // create state for holding returned gameSwapLibrary data
+  // useState for holding returned gameSwapLibrary data
   const [searchedGames, setSearchedGames] = useState<Game[]>([]);
 
-  // create state for holding our search field data
+  // useState for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
   // Search Bar Query
@@ -34,7 +34,7 @@ const SearchLibrary = () => {
   // Mutation to save a game to the user profile
   const [saveGame, { error }] = useMutation(SAVE_GAME);
 
-  // create state to hold saved game _id values
+  // useState to hold saved game _id values
   const [recordedGameIds, setRecordedGameIds] = useState(getSavedGameIds());
 
   // useState to determine if the game description should display

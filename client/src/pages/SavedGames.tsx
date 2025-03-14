@@ -69,7 +69,7 @@ const SavedGames = () => {
     getUserData();
   }, [data]);
 
-  // create function that accepts the game's mongo _id value as param and deletes the game from the database
+  // Function that accepts a game's mongoDB _id value as an argument and deletes that game from the user's savedGames
   const handleDeleteGame = async (_id: string, title: string) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     if (!token) {
