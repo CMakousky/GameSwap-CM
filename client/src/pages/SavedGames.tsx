@@ -19,9 +19,7 @@ const SavedGames = () => {
   });
 
   // Query to retrieve saved user data
-  const { loading, data, error, refetch } = useQuery(GET_ME);
-
-  const getMe = refetch();
+  const { loading, data, error } = useQuery(GET_ME);
 
   const userProfileData = data;
   
@@ -40,7 +38,7 @@ const SavedGames = () => {
           return false;
         }
 
-        await getMe;
+        await userProfileData.me;
 
         if (error) {
           throw new Error('something went wrong!');
