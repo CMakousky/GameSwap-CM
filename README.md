@@ -30,7 +30,7 @@ GameSwap is a web-based software application that allows users to borrow video g
 1. Clone the repository:
     ```sh
     git clone https://github.com/CMakousky/GameSwap-CM
-    cd GameSwap
+    cd GameSwap-CM
     ```
 
 2. Install dependencies for both client and server:
