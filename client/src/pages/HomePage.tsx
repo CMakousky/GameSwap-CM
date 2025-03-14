@@ -40,31 +40,15 @@ const SearchLibrary = () => {
   // useState to determine if the game description should display
   const [displayDescription, setDisplayDescription] = useState<string>();
 
-  // Function to strip HTML elements out of game descriptions
-  const queryResponseFilter = (queryResponse: Game[]): Game[] => {
-    const filteredResponse: Game[] = queryResponse.map((game: Game) => ({
-      _id: game._id,
-      publisher: game.publisher,
-      title: game.title,
-      released: game.released,
-      description: plainText(game.description),
-      image: game.image || '',
-      available: game.available
-    }))
-    return filteredResponse;
-  };
-
   // set up useEffect hook to save `recordedGameIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     const getEntireLibraryData = async () => {
       try {
         await entireLibrary.data;
-
-        const gameSwapLibraryData = queryResponseFilter(entireLibrary.data.gameSwapLibrary);
     
         if (!entireLibrary.loading && !searchedGames.length) {
-          setSearchedGames(gameSwapLibraryData);
+          setSearchedGames(entireLibrary.data.gameSwapLibrary);
         };
 
       } catch (err) {
@@ -85,24 +69,20 @@ const SearchLibrary = () => {
 
     // Return the entire library on an empty search
     if (!searchInput) {
-      setSearchedGames(queryResponseFilter(entireLibrary.data.gameSwapLibrary));
+      setSearchedGames(entireLibrary.data.gameSwapLibrary);
       return false;
     }
 
     try {
       const response = await searchByTitle.data;
 
-      // if (!response.ok) {
-      //   throw new Error('something went wrong!');
-      // }
+      if (searchByTitle.error) {
+        throw new Error('Something went wrong!');
+      };
 
-      const items = await response.searchBar;
+      const searchBarResults: Game[] = await response.searchBar;
 
-      // console.log(items);
-
-      const gameData = queryResponseFilter(items);
-
-      setSearchedGames(gameData);
+      setSearchedGames(searchBarResults);
       setSearchInput('');
     } catch (err) {
       console.error(err);
@@ -185,7 +165,7 @@ const SearchLibrary = () => {
                     <Card.Title>{game.title}</Card.Title>
                     <p className='small'>Released: {game.released}</p>
                     <p className='small'>Publisher: {game.publisher}</p>
-                    {displayDescription === game.title? <Card.Text>{game.description}</Card.Text> : <></>}
+                    {displayDescription === game.title? <Card.Text>{plainText(game.description)}</Card.Text> : <></>}
                     <span className='control-buttons'>
                       <Button 
                         onClick={() => {
