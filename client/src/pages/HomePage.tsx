@@ -26,7 +26,7 @@ const SearchLibrary = () => {
   const [searchedGames, setSearchedGames] = useState<Game[]>([]);
 
   // useState for holding our search field data
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState<string>('');
 
   // Search Bar Query
   const searchByTitle = useQuery(SEARCH_BAR, { variables: { title: searchInput } });
@@ -38,7 +38,7 @@ const SearchLibrary = () => {
   const [recordedGameIds, setRecordedGameIds] = useState(getSavedGameIds());
 
   // useState to determine if the game description should display
-  const [displayDescription, setDisplayDescription] = useState<string>();
+  const [displayDescription, setDisplayDescription] = useState<string>('');
 
   // set up useEffect hook to save `recordedGameIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
