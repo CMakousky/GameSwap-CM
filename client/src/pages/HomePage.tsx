@@ -158,7 +158,7 @@ const SearchLibrary = () => {
         <h2 className='pt-5 text-light orbitron'>
           {searchedGames.length
             ? `Viewing ${searchedGames.length} results:`
-            : `No matches found for ${searchInput}.`}
+            : 'No matches found.'}
         </h2>
         <Row>
           {searchedGames.map((game) => {
