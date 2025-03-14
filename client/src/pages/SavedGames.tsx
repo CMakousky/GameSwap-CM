@@ -36,7 +36,9 @@ const SavedGames = () => {
           return false;
         }
 
-        await refetch();
+        refetch();
+
+        await data;
 
         if (error) {
           throw new Error('something went wrong!');
