@@ -29,7 +29,7 @@ GameSwap is a web-based software application that allows users to borrow video g
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/terrencethe1/GameSwap.git
+    git clone https://github.com/CMakousky/GameSwap-CM
     cd GameSwap
     ```
 
@@ -71,7 +71,6 @@ GameSwap is a web-based software application that allows users to borrow video g
 - **Borrow Games**: Checkout games to your account. Due dates default to two weeks after the checkout button is pressed.
 - **Responsive Design**: The application is fully responsive and works on all devices.
 
-
 ## Technologies
 
 - **Frontend**: React, TypeScript, Apollo Client, React Router, Bootstrap,JWT
@@ -89,6 +88,3 @@ https://gameswap-cm.onrender.com
 ![GameSwap](./client/images/screenshot1.png)<br><br>
 ![GameSwap](./client/images/screenshot2.png) <br><br>
 ![GameSwap](./client/images/screenshot3.png) 
-
-
-
