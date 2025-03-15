@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 import { rentalGameSchema, type RentalGameDocument } from './RentalGame.js';
 
 export interface UserDocument extends Document {
-  _id: string;
   username: string;
   email: string;
   password: string;
