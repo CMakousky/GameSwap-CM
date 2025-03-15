@@ -9,8 +9,7 @@ export interface RentalGameDocument extends Document {
 const rentalGameSchema = new Schema<RentalGameDocument>({
     _id: {
         type: Schema.Types.ObjectId,
-        ref: LibraryGame,
-        unique: true
+        ref: LibraryGame
     },
     returnDate: {
         type: String,
