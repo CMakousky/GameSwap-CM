@@ -32,8 +32,7 @@ const userSchema = new Schema<UserDocument>(
     // Set savedGames to be an array of data that adheres to the rentalGameSchema. Each item in the array must be unique.
     savedGames: [
       {
-        type: rentalGameSchema,
-        unique: true
+        type: rentalGameSchema
       }
     ],
   },
